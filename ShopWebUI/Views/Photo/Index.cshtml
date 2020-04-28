@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Shop.BLL.BizModels.PhotoDTO>
+
+@{
+    ViewBag.Title = "Index";
+}
+<h3>
+    @ViewBag.Product.ProductName; Price - @ViewBag.Product.Price
+</h3>
+@Html.ActionLink("Add photo", "Upload", "Photo", new { id = ViewBag.Product.ProductId }, new { @class = "btn btn-warning" })
+@if (Model.Count() > 0)
+{
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4 col-sm-6 col btn-xs col-xs-12">
+                    <hr />
+                    <img src="@item.PhotoPath" height="200" />
+                    <hr />
+                    <a href="#" class="btn btn-danger btn-sm btndel-photo"
+                       data-photoid="@item.PhotoId">
+                        Delete photo
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <h3>No photo</h3>
+}
+@section Script{
+    <script>
+    $(function(){
+        $('.btndel-photo').click(function () {
+            let id = $(this).attr('data-photoid')
+            if (confirm('Are you sure?')) {
+                $.ajax({
+                    url: "@Url.Action("Delete","Photo")",
+                    type: 'POST',
+                    data: { id: id },
+                    success: function (data) {
+                        if (data == "OK") {
+                            window.location.href = "@Url.Action("Index","Photo",new {id=ViewBag.Product.ProductId })";
+                        }
+                        else
+                            alert("Error on server");
+                    },
+                    error: function (data) {
+                        alert(data);
+                    }
+                });
+            }
+        })
+    })
+    </script>
+}

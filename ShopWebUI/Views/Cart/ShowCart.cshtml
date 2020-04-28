@@ -1,0 +1,80 @@
+﻿@*@model IEnumerable<ShopWebUI.Models.CartEntity>*@
+@model ShopWebUI.Models.Cart
+
+@{
+    ViewBag.Title = "ShowCart";
+}
+
+<h2>ShowCart</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Имя товара")
+        </th>
+        <th>
+            @Html.DisplayName("Цена за единицу")
+        </th>
+        <th>
+            @Html.DisplayName("Количество")
+        </th>
+        <th>
+            @Html.DisplayName("Сумма")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.productList)
+    {
+        decimal sum = item.Product.Price * item.Qty;
+        <tr id="tr-@item.Product.ProductId">
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Qty)
+            </td>
+            <td>
+                @sum.ToString("#0.00")
+            <td>
+                @Html.ActionLink("Delete", "RemoveFromCart", null, new { @class = "btn btn-danger remove", id = item.Product.ProductId })
+            </td>
+
+        </tr>
+    }
+    <tr>
+        <td colspan="3" class="text-center"> Всего сумма к оплате</td>
+        <td class="text-left text-danger sumTotal">@Model.TotalSumPerEntity().ToString("#0.00")</td>
+    </tr>
+</table>
+
+<div class="row">
+    <div class="col-md-6">
+        @Html.ActionLink("Продолжить покупки", "Index","ProductFind", null, new { @class = "btn btn-info"})
+    </div>
+    <div class="col-md-6">
+        @Html.ActionLink("Оформить заказ",null, null, new { @class = "btn btn-success" })
+</div>
+
+
+@section Script{
+    <script>
+        $(function () {
+            $('body').on('click', '.remove', function (e) {
+                e.preventDefault();
+                let id = $(this).attr("id");
+                $.post("@Url.Action("RemoveFromCart","Cart")", { id: id},
+                    function (data) {
+                        if (data == "Ok") {
+                            window.location.reload();                           
+                        }
+                    }
+                )
+            })
+        })
+    </script>
+}
+

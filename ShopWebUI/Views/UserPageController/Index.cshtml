@@ -1,0 +1,27 @@
+﻿@model ShopWebUI.Models.ViewModelProductView
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model.productViews)
+        {
+            <div class="col-md-4 col-sm-6 col btn-xs col-xs-12">
+                <hr />
+                <img src="@item.PhotoPath" height="200" />
+                <hr />
+                <p>
+                    @item.ProductName;@item.Price
+                </p>
+                <a href="#" class="btn btn-warning btn-sm add-cart"
+                   data-photoid="@item.ProductId">
+                    Add to cart
+                </a>
+            </div>
+        }
+    </div>
+</div>
+

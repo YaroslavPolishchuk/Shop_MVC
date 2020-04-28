@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Shop.BLL.BizModels.ProductDTO>
+
+@{
+    ViewBag.Title = "Products";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create",null,new { @class = "btn btn-primary" })
+</p>
+<table class="table">
+    <tr>
+        @*<th>
+            @Html.DisplayNameFor(model => model.ProductId)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.ManufacturerName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </th>      
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductCount)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.ProductId)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductName)
+        </td>       
+        <td>
+            @Html.DisplayFor(modelItem => item.ManufacturerName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CategoryName)
+        </td>     
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductCount)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.ProductId }, new { @class = "btn btn-primary" })
+
+            @Html.ActionLink("Delete", "Delete", new { id = item.ProductId }, new { @class = "btn btn-danger" })
+            @Html.ActionLink("Photo", "Index","Photo", new { id = item.ProductId }, new { @class = "btn btn-warning" })
+        </td>
+    </tr>
+}
+
+</table>

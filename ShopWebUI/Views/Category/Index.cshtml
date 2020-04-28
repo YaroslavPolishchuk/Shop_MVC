@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Shop.BLL.BizModels.CategoryDTO>
+
+@{
+    ViewBag.Title = "Categories";
+}
+
+
+
+<p>
+    @Html.ActionLink("Create New", "Edit", "Category", null, new { @class = "btn btn-success" })
+</p>
+<table class="table">
+    <tr>
+        @*<th>
+                @Html.DisplayNameFor(model => model.CategoryId)
+            </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr id="id-@item.CategoryId">
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.CategoryId)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", "Category", new { id = item.CategoryId }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Delete", "Delete","Category", new { id = item.CategoryId }, new { @class = "btn btn-danger btn-del" , id=item.CategoryId})
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+@section Script{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script>
+        $(function () {
+            $('body').on('click', '.btn-del', function (e) {
+                e.preventDefault();
+                let id = $(this).attr("id");
+                $.post('@Url.Action("Delete","Category")', {
+                    id: id
+                },                
+                function(data) {
+                    if (data == "Ok") {
+                        $('#id-' +id).remove();
+                    }
+                })
+            })
+        })
+    </script>
+}
