@@ -119,6 +119,7 @@
     <Compile Include="App_Start\AutofacWebapiConfig.cs" />
     <Compile Include="App_Start\Bootstrapper.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProductFindController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Global.asax.cs">

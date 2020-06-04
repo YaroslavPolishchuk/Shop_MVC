@@ -2,8 +2,10 @@
 using ObjectRepository;
 using Shop.BLL.BizModels;
 using Shop.BLL.Services;
+using Shop.BLL.Services.ViewModelsServices;
 using Shop.DAL.DbLayer;
 using Shop.DAL.Repository;
+using ShopWebAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -34,6 +36,8 @@ namespace Shop.BLL.Modules
 
             builder.RegisterType(typeof(SalePosService)).As(typeof(IGenericService<SalePosDTO, int>));
             builder.RegisterType(typeof(SalePosRepository)).As(typeof(ICommonRepository<SalePos, int>));
+
+            builder.RegisterType(typeof(ProductWithPhotoViewModelService)).As(typeof(IProductWithPhotoViewModelService));
 
             builder.RegisterType(typeof(UnitOfWorkSale)).As(typeof(IUnitOfWorkSale));
 
